@@ -43,14 +43,26 @@ function useLocalStorage(key, initialValue) {
 }
 
 function markdownToHtml(md) {
-  let html = md.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-  html = html.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10">$1</code>')
-  html = html.replace(/
-/g, '<br/>');
-  return html
-}
+  // escape
+  let html = md
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 
+  // **bold**
+  html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+  // `inline code`
+  html = html.replace(
+    /`([^`]+)`/g,
+    '<code class="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10">$1</code>'
+  );
+
+  // line breaks (this was the line that got broken before)
+  html = html.replace(/\n/g, "<br/>");
+
+  return html;
+}
 function Message({ role, text }) {
   const isUser = role === 'user'
   return (
