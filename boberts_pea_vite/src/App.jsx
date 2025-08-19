@@ -102,10 +102,9 @@ ${d.ToneStyle || 'Supportive, clear, and conversational (≈8th-grade reading le
   lines.push(`
 # Examples
 ${d.Examples || '(none)'}`)
-  lines.push(`
-If any critical info is missing, ask targeted follow-up questions before executing.`)
-  return lines.join('
-')
+// ...the lines[] builder just above...
+lines.push('If any critical info is missing, ask targeted follow-up questions before executing.');
+return lines.join('\n');
 }
 
 export default function App() {
