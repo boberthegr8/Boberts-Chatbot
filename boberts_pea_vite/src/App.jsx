@@ -52,14 +52,12 @@ function markdownToHtml(md) {
   // **bold**
   html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
-  // `inline code`
-  html = html.replace(
-    /`([^`]+)`/g,
-    '<code class="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10">$1</code>'
-  );
+// `inline code` — single line to avoid accidental line breaks
+html = html.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10">$1</code>');
 
-  // line breaks (this was the line that got broken before)
-  html = html.replace(/\n/g, "<br/>");
+// line breaks — use split/join (avoids regex entirely)
+html = html.split('\n').join('<br/>');
+
 
   return html;
 }
